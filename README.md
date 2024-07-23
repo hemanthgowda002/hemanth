@@ -1,8 +1,9 @@
 // Create a folder in d drive and copy path
 >cd path
 >git init
-Create a text file in the folder and copy path
+>touch .txt
 >git add path
+>git clone url
 >git commit -m "first commit"
 >git remote add origin git_repository_path
 >git push -u origin master
@@ -13,78 +14,58 @@ Create a text file in the folder and copy path
 >git branch -d a1   (delete a branch)
 >git checkout -b m1
 >git fetch --all
+git --force origin main
 
+import java.util.Scanner;
 
-import java.text.ParseException;
+public class FCFS {
+    
+    static class Process {
+        int id, arrivalTime, burstTime, waitingTime, turnaroundTime;
+        
+        Process(int id, int arrivalTime, int burstTime) {
+            this.id = id;
+            this.arrivalTime = arrivalTime;
+            this.burstTime = burstTime;
+        }
+    }
 
-class GFG {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-// Function to find the waiting time for all
-// processes
-static void findWaitingTime(int processes[], int n,
-int bt[], int wt[]) {
-// waiting time for first process is 0
-wt[0] = 0;
+        System.out.print("Enter the number of processes: ");
+        int n = sc.nextInt();
+        
+        Process[] processes = new Process[n];
+        
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter arrival time and burst time for process " + (i + 1) + ": ");
+            int arrivalTime = sc.nextInt();
+            int burstTime = sc.nextInt();
+            processes[i] = new Process(i + 1, arrivalTime, burstTime);
+        }
 
-// calculating waiting time
-for (int i = 1; i < n; i++) {
-wt[i] = bt[i - 1] + wt[i - 1];
-}
-}
+        // Sort processes by arrival time
+        java.util.Arrays.sort(processes, (p1, p2) -> p1.arrivalTime - p2.arrivalTime);
 
-// Function to calculate turn around time
-static void findTurnAroundTime(int processes[], int n,
-int bt[], int wt[], int tat[]) {
-// calculating turnaround time by adding
-// bt[i] + wt[i]
-for (int i = 0; i < n; i++) {
-tat[i] = bt[i] + wt[i];
-}
-}
+        int currentTime = 0;
+        
+        for (Process p : processes) {
+            if (currentTime < p.arrivalTime) {
+                currentTime = p.arrivalTime;
+            }
+            p.waitingTime = currentTime - p.arrivalTime;
+            p.turnaroundTime = p.waitingTime + p.burstTime;
+            currentTime += p.burstTime;
+        }
 
-//Function to calculate average time
-static void findavgTime(int processes[], int n, int bt[]) {
-int wt[] = new int[n], tat[] = new int[n];
-int total_wt = 0, total_tat = 0;
+        System.out.println("\nProcess ID | Arrival Time | Burst Time | Waiting Time | Turnaround Time");
+        for (Process p : processes) {
+            System.out.printf("%9d | %12d | %9d | %12d | %15d%n", p.id, p.arrivalTime, p.burstTime, p.waitingTime, p.turnaroundTime);
+        }
 
-//Function to find waiting time of all processes
-findWaitingTime(processes, n, bt, wt);
-
-//Function to find turn around time for all processes
-findTurnAroundTime(processes, n, bt, wt, tat);
-
-//Display processes along with all details
-System.out.printf("Processes Burst time Waiting"
-+" time Turn around time\n");
-
-// Calculate total waiting time and total turn
-// around time
-for (int i = 0; i < n; i++) {
-total_wt = total_wt + wt[i];
-total_tat = total_tat + tat[i];
-System.out.printf(" %d ", (i + 1));
-System.out.printf(" %d ", bt[i]);
-System.out.printf(" %d", wt[i]);
-System.out.printf(" %d\n", tat[i]);
-}
-float s = (float)total_wt /(float) n;
-int t = total_tat / n;
-System.out.printf("Average waiting time = %f", s);
-System.out.printf("\n");
-System.out.printf("Average turn around time = %d ", t);
+        sc.close();
+    }
 }
 
-// Driver code
-public static void main(String[] args) throws ParseException {
-//process id's
-int processes[] = {1, 2, 3};
-int n = processes.length;
 
-//Burst time of all processes
-int burst_time[] = {10, 5, 8};
-
-findavgTime(processes, n, burst_time);
-
-}
-}
-// This code is contributed by 29ajaykumar
