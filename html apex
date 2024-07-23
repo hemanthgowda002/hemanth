@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample HTML with Image</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Sample Page</h1>
+    </header>
+    <section>
+        <p>This is a sample HTML page that includes an image. Below is an example image:</p>
+        <img src="https://via.placeholder.com/600x400" alt="Sample Image">
+    </section>
+    <footer>
+        <p>© 2024 Sample HTML Page</p>
+    </footer>
+</body>
+</html>
+
